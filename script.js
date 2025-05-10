@@ -2,17 +2,15 @@ function convertToRoman() {
   const num = parseInt(document.getElementById('numberInput').value);
   const resultEl = document.getElementById('result');
 
-  if (isNaN(num) || num < 0 || num > 100000) {
-    resultEl.textContent = 'Please enter a number from 0 to 100000.';
+  if (isNaN(num) || num < 1 || num > 100000) {
+    resultEl.textContent = 'Please enter a number between 1 and 100000.';
     return;
   }
 
-  if (num === 0) {
-    resultEl.textContent = 'N'; // Historical representation for zero
-    return;
-  }
-
-  const romanMap = [
+  const romanNumerals = [
+    ['ↈ', 100000],
+    ['ↇ', 50000],
+    ['ↂ', 10000],
     ['M', 1000],
     ['CM', 900],
     ['D', 500],
@@ -25,24 +23,18 @@ function convertToRoman() {
     ['IX', 9],
     ['V', 5],
     ['IV', 4],
-    ['I', 1],
+    ['I', 1]
   ];
 
-  let remaining = num;
   let result = '';
+  let number = num;
 
-  // Add thousands manually for numbers over 3999
-  while (remaining >= 1000) {
-    result += 'M';
-    remaining -= 1000;
-  }
-
-  for (const [symbol, value] of romanMap) {
-    while (remaining >= value) {
+  for (const [symbol, value] of romanNumerals) {
+    while (number >= value) {
       result += symbol;
-      remaining -= value;
+      number -= value;
     }
   }
 
-  resultEl.textContent = result.toUpperCase();
+  resultEl.textContent = result;
 }
